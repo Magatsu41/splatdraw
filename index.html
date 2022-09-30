@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html style="width:100%">
+    <head>
+        <title>Splat Draw</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body style="width:100%">
+        <h2>SplatDraw v1.0</h2>
+        <p>Please read the full documentation <a href="https://github.com/Magatsu41/splatdraw" target="_blank" rel="noopener noreferrer">here</a></p>
+        <pre> </pre>
+        <p>Paste the URL of the image in the field bellow :</p>
+        <pre> &nbsp; </pre>
+        <form>
+            <input id="image" type="text" /> <input type="button" value="generate macro" onclick="send()"/>
+        </form>
+        <p><pre> </pre></p>
+        <div id="error">
+
+        </div>
+        <div id="mage">
+
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+
+    var socket = io();
+    let error = document.getElementById("error");
+    let xhr = new XMLHttpRequest();
+    error.style.visibility='hidden';
+    let mage = document.getElementById("mage");
+
+    socket.on('error', function(msg) {
+        error.style.visibility='hidden';
+        error.innerHTML= "";
+        error.innerHTML= "<p>ERROR:</p><p>"+msg+"</p>";
+        error.style.visibility='visible';
+     });
+
+     function send() {
+        xhr.open('GET', 'http://localhost/generate?image='+document.getElementById("image").value);
+        xhr.send();
+     }
+
+     socket.on('success', ({ path, mac }) => {
+        error.style.visibility='hidden';
+        error.innerHTML= "";
+        mage.innerHTML= "";
+        mage.innerHTML= "<p>Macro generated for the following image: <br/><p><img src='"+path+"' />";
+        var fileName = "macro.txt";
+        var fileContent = mac;
+        var myFile = new Blob([fileContent], {type: 'text/plain'});
+        var hiddenElement = document.createElement('a');
+        window.URL = window.URL || window.webkitURL;
+        hiddenElement.target = '_blank';
+        hiddenElement.setAttribute("href", window.URL.createObjectURL(myFile));
+        hiddenElement.setAttribute("download", fileName);
+        hiddenElement.click();
+    });
+
+</script>
+<style>
+    #error{
+        border-radius: 1px;
+        border-style: outset;
+        background-color: rgb(233, 156, 169);
+        border-color: darkred;
+        color: red;
+        width: 40%;
+        padding: 15px;
+    }
+</style>

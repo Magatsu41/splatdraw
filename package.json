@@ -1,0 +1,21 @@
+{
+  "name": "splatdraw",
+  "version": "1.0.0",
+  "description": "An app to help you create auto splatpost with linux and bt",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Magatsu41/splatdraw.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Magatsu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "jimp": "^0.16.2",
+    "socket.io": "^4.5.2"
+  }
+}
