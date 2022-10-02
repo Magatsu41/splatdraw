@@ -99,7 +99,7 @@ function generateMacro(img, pathe){
   let direction = true
   let lines = []
   for(i=1; i<121; i++){
-    lines.push((i*120)-1)
+    lines.push((i*320)-1)
   }
   let macro = ""
   macro = macro+"3S"
@@ -111,6 +111,10 @@ function generateMacro(img, pathe){
   const size = img.length
   for (i=0; i<size; i++){
     if(lines.includes(i)){
+      macro = macro+"DPAD_DOWN 0.2S"
+      macro = macro+"\n"
+      macro = macro+"0.1S"
+      macro = macro+"\n"
       direction = !direction
     }
     if(img[i]==1){
